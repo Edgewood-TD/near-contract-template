@@ -33,12 +33,20 @@ test.afterEach(async (t) => {
 
 test("Storage deposit", async (t) => {
 	const { root, contract } = t.context.accounts;
+	await root.call(
+		contract.accountId,
+		"storage_deposit",
+		{},
+		{
+			attachedDeposit: parseNEAR("1 NEAR"),
+		}
+	);
 	const message: string = await root.call(
 		contract.accountId,
 		"storage_deposit",
 		{},
 		{
-			attachedDeposit: parseNEAR("5.55 NEAR"),
+			attachedDeposit: parseNEAR("2 NEAR"),
 		}
 	);
 	console.log(message);
@@ -76,4 +84,14 @@ test("STORAGE DEPOSIT SET AND REMOVE", async (t) => {
 	});
 	t.is(balance2.available < balance1.available, true);
 	t.is(balance3.available > balance2.available, true);
+});
+
+test("Throw error without deposit", async (t) => {
+	const { root, contract } = t.context.accounts;
+
+	await t.throwsAsync(
+		root.call(contract.accountId, "set_data", {
+			string: "Hello World",
+		})
+	);
 });

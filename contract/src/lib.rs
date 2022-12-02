@@ -70,7 +70,7 @@ mod tests {
 
     #[test]
     fn get_default_greeting() {
-        let contract = Contract::new("alice.testnet".parse().unwrap());
+        let _contract = Contract::new("alice.testnet".parse().unwrap());
         // this test did not call set_greeting so should return the default "Hello" greeting
     }
 
